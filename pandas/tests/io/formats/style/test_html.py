@@ -825,3 +825,15 @@ def test_concat(styler):
     """
     )
     assert expected in result
+
+
+def test_special_chars_in_url():
+    urls = [
+        "http://www.domain.com:80",
+        "http://www.domain.com/some#anchor",
+        "http://www.domain.com/path?field=with+space",
+    ]
+    df = DataFrame(urls)
+    result = df.style.format(hyperlinks="html").to_html()
+    for url in urls:
+        assert url in result
